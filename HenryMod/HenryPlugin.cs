@@ -39,9 +39,6 @@ namespace HenryMod
             // used when you want to properly set up language folders
             Modules.Language.Init();
 
-            // character initialization
-            new HenrySurvivor().Initialize();
-
             // make a content pack and add it. this has to be last
             new Modules.ContentPacks().Initialize();
         }
