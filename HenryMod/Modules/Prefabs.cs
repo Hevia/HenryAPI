@@ -9,7 +9,7 @@ using RoR2.Skills;
 using System;
 using System.Linq;
 
-namespace HenryMod.Modules
+namespace HenryAPI.Modules
 {
     // module for creating body prefabs and whatnot
     // recommended to simply avoid touching this unless you REALLY need to

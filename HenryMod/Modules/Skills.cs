@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using HenryMod;
 using UnityEngine;
 
-namespace HenryMod.Modules
+namespace HenryAPI.Modules
 {
     internal static class Skills
     {

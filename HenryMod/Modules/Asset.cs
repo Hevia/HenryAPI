@@ -10,7 +10,7 @@ using RoR2.Projectile;
 using Path = System.IO.Path;
 using System;
 
-namespace HenryMod.Modules
+namespace HenryAPI.Modules
 {
     internal static class Asset
     {

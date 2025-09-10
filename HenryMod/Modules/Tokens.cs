@@ -1,4 +1,4 @@
-﻿namespace HenryMod.Modules
+﻿namespace HenryAPI.Modules
 {
     internal static class Tokens
     {
