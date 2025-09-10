@@ -1,5 +1,4 @@
 ﻿using BepInEx;
-using HenryMod.Survivors.Henry;
 using R2API.Utils;
 using RoR2;
 using System.Collections.Generic;

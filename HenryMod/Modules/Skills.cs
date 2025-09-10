@@ -3,7 +3,7 @@ using RoR2;
 using RoR2.Skills;
 using System;
 using System.Collections.Generic;
-using HenryMod;
+using HenryAPI;
 using UnityEngine;
 
 namespace HenryAPI.Modules
@@ -26,16 +26,16 @@ namespace HenryAPI.Modules
                 switch (slots[i])
                 {
                     case SkillSlot.Primary:
-                        skillLocator.primary = CreateGenericSkillWithSkillFamily(targetPrefab, "Primary");
+                        skillLocator.primary = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Primary);
                         break;
                     case SkillSlot.Secondary:
-                        skillLocator.secondary = CreateGenericSkillWithSkillFamily(targetPrefab, "Secondary");
+                        skillLocator.secondary = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Secondary);
                         break;
                     case SkillSlot.Utility:
-                        skillLocator.utility = CreateGenericSkillWithSkillFamily(targetPrefab, "Utility");
+                        skillLocator.utility = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Utility);
                         break;
                     case SkillSlot.Special:
-                        skillLocator.special = CreateGenericSkillWithSkillFamily(targetPrefab, "Special");
+                        skillLocator.special = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Special);
                         break;
                     case SkillSlot.None:
                         break;
@@ -57,21 +57,21 @@ namespace HenryAPI.Modules
             switch (skillSlot)
             {
                 case SkillSlot.Primary:
-                    return skillLocator.primary = CreateGenericSkillWithSkillFamily(targetPrefab, "Primary", hidden);
+                    return skillLocator.primary = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Primary, hidden);
                 case SkillSlot.Secondary:
-                    return skillLocator.secondary = CreateGenericSkillWithSkillFamily(targetPrefab, "Secondary", hidden);
+                    return skillLocator.secondary = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Secondary, hidden);
                 case SkillSlot.Utility:
-                    return skillLocator.utility = CreateGenericSkillWithSkillFamily(targetPrefab, "Utility", hidden);
+                    return skillLocator.utility = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Utility, hidden);
                 case SkillSlot.Special:
-                    return skillLocator.special = CreateGenericSkillWithSkillFamily(targetPrefab, "Special", hidden);
+                    return skillLocator.special = CreateGenericSkillWithSkillFamily(targetPrefab, SkillSlot.Special, hidden);
                 case SkillSlot.None:
                     Log.Error("Failed to create GenericSkill with skillslot None. If making a GenericSkill outside of the main 4, specify a familyName, and optionally a genericSkillName");
                     return null;
             }
             return null;
         }
-        public static GenericSkill CreateGenericSkillWithSkillFamily(GameObject targetPrefab, string familyName, bool hidden = false) => CreateGenericSkillWithSkillFamily(targetPrefab, familyName, familyName, hidden);
-        public static GenericSkill CreateGenericSkillWithSkillFamily(GameObject targetPrefab, string genericSkillName, string familyName, bool hidden = false)
+        public static GenericSkill CreateGenericSkillWithSkillFamily(ContentPackContainer contentPack, GameObject targetPrefab, string familyName, bool hidden = false) => CreateGenericSkillWithSkillFamily(contentPack, targetPrefab, familyName, familyName, hidden);
+        public static GenericSkill CreateGenericSkillWithSkillFamily(ContentPackContainer contentPack, GameObject targetPrefab, string genericSkillName, string familyName, bool hidden = false)
         {
             GenericSkill skill = targetPrefab.AddComponent<GenericSkill>();
             skill.skillName = genericSkillName;
@@ -83,7 +83,7 @@ namespace HenryAPI.Modules
 
             skill._skillFamily = newFamily;
 
-            Content.AddSkillFamily(newFamily);
+            Content.AddSkillFamily(contentPack, newFamily);
             return skill;
         }
         #endregion

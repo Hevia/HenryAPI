@@ -34,7 +34,7 @@ namespace HenryAPI.Modules
             AssetBundle assetBundle = null;
             try
             {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(HenryPlugin.instance.Info.Location), "AssetBundles", bundleName));
+                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(HenryAPIPlugin.instance.Info.Location), "AssetBundles", bundleName));
             }
             catch (System.Exception e)
             {
@@ -47,7 +47,7 @@ namespace HenryAPI.Modules
 
         }
 
-        internal static GameObject CloneTracer(string originalTracerName, string newTracerName)
+        internal static GameObject CloneTracer(ContentPackContainer contentPack, string originalTracerName, string newTracerName)
         {
             if (RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/" + originalTracerName) == null) 
                 return null;
@@ -61,7 +61,7 @@ namespace HenryAPI.Modules
             newTracer.GetComponent<Tracer>().speed = 250f;
             newTracer.GetComponent<Tracer>().length = 50f;
 
-            Modules.Content.CreateAndAddEffectDef(newTracer);
+            Modules.Content.CreateAndAddEffectDef(contentPack, newTracer);
 
             return newTracer;
         }
@@ -93,8 +93,8 @@ namespace HenryAPI.Modules
             }
         }
 
-        internal static GameObject LoadEffect(this AssetBundle assetBundle, string resourceName, bool parentToTransform) => LoadEffect(assetBundle, resourceName, "", parentToTransform);
-        internal static GameObject LoadEffect(this AssetBundle assetBundle, string resourceName, string soundName = "", bool parentToTransform = false)
+        internal static GameObject LoadEffect(this AssetBundle assetBundle, ContentPackContainer contentPack, string resourceName, bool parentToTransform) => LoadEffect(assetBundle, contentPack, resourceName, "", parentToTransform);
+        internal static GameObject LoadEffect(this AssetBundle assetBundle, ContentPackContainer contentPack, string resourceName, string soundName = "", bool parentToTransform = false)
         {
             GameObject newEffect = assetBundle.LoadAsset<GameObject>(resourceName);
 
@@ -114,7 +114,7 @@ namespace HenryAPI.Modules
             effect.positionAtReferencedTransform = true;
             effect.soundName = soundName;
 
-            Modules.Content.CreateAndAddEffectDef(newEffect);
+            Modules.Content.CreateAndAddEffectDef(contentPack, newEffect);
 
             return newEffect;
         }
@@ -140,7 +140,7 @@ namespace HenryAPI.Modules
             return newPrefab;
         }
 
-        internal static GameObject LoadAndAddProjectilePrefab(this AssetBundle assetBundle, string newPrefabName)
+        internal static GameObject LoadAndAddProjectilePrefab(this AssetBundle assetBundle, ContentPackContainer contentPack, string newPrefabName)
         {
             GameObject newPrefab = assetBundle.LoadAsset<GameObject>(newPrefabName);
             if(newPrefab == null)
@@ -149,7 +149,7 @@ namespace HenryAPI.Modules
                 return null;
             }
 
-            Content.AddProjectilePrefab(newPrefab);
+            Content.AddProjectilePrefab(contentPack, newPrefab);
             return newPrefab;
         }
     }

@@ -6,26 +6,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace HenryAPI.Modules {
-    internal class ContentPacks : IContentPackProvider
+    public class ContentPackContainer : IContentPackProvider
     {
         internal ContentPack contentPack = new ContentPack();
-        public string identifier => HenryPlugin.MODUID;
+        public string identifier => HenryAPIPlugin.MODUID;
 
-        public static List<GameObject> bodyPrefabs = new List<GameObject>();
-        public static List<GameObject> masterPrefabs = new List<GameObject>();
-        public static List<GameObject> projectilePrefabs = new List<GameObject>();
+        public List<GameObject> bodyPrefabs = new List<GameObject>();
+        public List<GameObject> masterPrefabs = new List<GameObject>();
+        public List<GameObject> projectilePrefabs = new List<GameObject>();
 
-        public static List<SurvivorDef> survivorDefs = new List<SurvivorDef>();
-        public static List<UnlockableDef> unlockableDefs = new List<UnlockableDef>();
+        public  List<SurvivorDef> survivorDefs = new List<SurvivorDef>();
+        public  List<UnlockableDef> unlockableDefs = new List<UnlockableDef>();
 
-        public static List<SkillFamily> skillFamilies = new List<SkillFamily>();
-        public static List<SkillDef> skillDefs = new List<SkillDef>();
-        public static List<Type> entityStates = new List<Type>();
+        public List<SkillFamily> skillFamilies = new List<SkillFamily>();
+        public List<SkillDef> skillDefs = new List<SkillDef>();
+        public List<Type> entityStates = new List<Type>();
 
-        public static List<BuffDef> buffDefs = new List<BuffDef>();
-        public static List<EffectDef> effectDefs = new List<EffectDef>();
+        public List<BuffDef> buffDefs = new List<BuffDef>();
+        public List<EffectDef> effectDefs = new List<EffectDef>();
 
-        public static List<NetworkSoundEventDef> networkSoundEventDefs = new List<NetworkSoundEventDef>();
+        public List<NetworkSoundEventDef> networkSoundEventDefs = new List<NetworkSoundEventDef>();
 
         public void Initialize()
         {

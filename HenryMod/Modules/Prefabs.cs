@@ -2,7 +2,7 @@
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
-using HenryMod.Modules.Characters;
+using HenryAPI.Modules.Characters;
 using RoR2.CharacterAI;
 using static RoR2.CharacterAI.AISkillDriver;
 using RoR2.Skills;
@@ -86,35 +86,35 @@ namespace HenryAPI.Modules
         /// <summary>
         /// clone a body according to your BodyInfo, load your model prefab from the assetbundle, and set up components on both objects through code
         /// </summary>
-        public static GameObject CreateBodyPrefab(AssetBundle assetBundle, string modelPrefabName, BodyInfo bodyInfo)
+        public static GameObject CreateBodyPrefab(ContentPackContainer contentPack, AssetBundle assetBundle, string modelPrefabName, BodyInfo bodyInfo)
         {
-            return CreateBodyPrefab(LoadCharacterModel(assetBundle, modelPrefabName), bodyInfo);
+            return CreateBodyPrefab(contentPack, LoadCharacterModel(assetBundle, modelPrefabName), bodyInfo);
         }
         /// <summary>
         /// clone a body according to your BodyInfo, pass in your model prefab, and set up components on both objects through code
         /// </summary>
-        public static GameObject CreateBodyPrefab(GameObject model, BodyInfo bodyInfo)
+        public static GameObject CreateBodyPrefab(ContentPackContainer contentPack, GameObject model, BodyInfo bodyInfo)
         {
-            return CreateBodyPrefab(CloneCharacterBody(bodyInfo), model, bodyInfo);
+            return CreateBodyPrefab(contentPack, CloneCharacterBody(bodyInfo), model, bodyInfo);
         }
         /// <summary>
         /// Pass in a body prefab, loads your model from the assetbundle, and set up components on both objects through code
         /// </summary>
-        public static GameObject CreateBodyPrefab(GameObject newBodyPrefab, AssetBundle assetBundle, string modelName, BodyInfo bodyInfo)
+        public static GameObject CreateBodyPrefab(ContentPackContainer contentPack, GameObject newBodyPrefab, AssetBundle assetBundle, string modelName, BodyInfo bodyInfo)
         {
-            return CreateBodyPrefab(newBodyPrefab, LoadCharacterModel(assetBundle, modelName), bodyInfo);
+            return CreateBodyPrefab(contentPack, newBodyPrefab, LoadCharacterModel(assetBundle, modelName), bodyInfo);
         }
         /// <summary>
         /// loads your body from the assetbundle, loads your model from the assetbundle, and set up components on both objects through code
         /// </summary>
-        public static GameObject CreateBodyPrefab(AssetBundle assetBundle, string bodyPrefabName, string modelPrefabName, BodyInfo bodyInfo)
+        public static GameObject CreateBodyPrefab(ContentPackContainer contentPack, AssetBundle assetBundle, string bodyPrefabName, string modelPrefabName, BodyInfo bodyInfo)
         {
-            return CreateBodyPrefab(LoadCharacterBody(assetBundle, bodyPrefabName), LoadCharacterModel(assetBundle, modelPrefabName), bodyInfo);
+            return CreateBodyPrefab(contentPack, LoadCharacterBody(assetBundle, bodyPrefabName), LoadCharacterModel(assetBundle, modelPrefabName), bodyInfo);
         }
         /// <summary>
         /// Pass in a body prefab, pass in a model prefab, and set up components on both objects through code
         /// </summary>
-        public static GameObject CreateBodyPrefab(GameObject newBodyPrefab, GameObject model, BodyInfo bodyInfo)
+        public static GameObject CreateBodyPrefab(ContentPackContainer contentPack, GameObject newBodyPrefab, GameObject model, BodyInfo bodyInfo)
         {
             if (model == null || newBodyPrefab == null)
             {
@@ -132,7 +132,7 @@ namespace HenryAPI.Modules
             //SetupRigidbody(newPrefab);
             SetupCapsuleCollider(newBodyPrefab);
 
-            Modules.Content.AddCharacterBodyPrefab(newBodyPrefab);
+            Modules.Content.AddCharacterBodyPrefab(contentPack, newBodyPrefab);
 
             return newBodyPrefab;
         }
@@ -545,21 +545,21 @@ namespace HenryAPI.Modules
         #endregion
 
         #region master
-        public static void CreateGenericDoppelganger(GameObject bodyPrefab, string masterName, string masterToCopy) => CloneDopplegangerMaster(bodyPrefab, masterName, masterToCopy);
-        public static GameObject CloneDopplegangerMaster(GameObject bodyPrefab, string masterName, string masterToCopy)
+        public static void CreateGenericDoppelganger(ContentPackContainer contentPack,GameObject bodyPrefab, string masterName, string masterToCopy) => CloneDopplegangerMaster(contentPack,bodyPrefab, masterName, masterToCopy);
+        public static GameObject CloneDopplegangerMaster(ContentPackContainer contentPack, GameObject bodyPrefab, string masterName, string masterToCopy)
         {
             GameObject newMaster = PrefabAPI.InstantiateClone(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterMasters/" + masterToCopy + "MonsterMaster"), masterName, true);
             newMaster.GetComponent<CharacterMaster>().bodyPrefab = bodyPrefab;
 
-            Modules.Content.AddMasterPrefab(newMaster);
+            Modules.Content.AddMasterPrefab(contentPack, newMaster);
             return newMaster;
         }
 
-        public static GameObject CreateBlankMasterPrefab(GameObject bodyPrefab, string masterName)
+        public static GameObject CreateBlankMasterPrefab(ContentPackContainer contentPack, GameObject bodyPrefab, string masterName)
         {
             GameObject masterObject = PrefabAPI.InstantiateClone(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/CharacterMasters/CommandoMonsterMaster"), masterName, true);
             //should the user call this themselves?
-            Modules.ContentPacks.masterPrefabs.Add(masterObject);
+            contentPack.masterPrefabs.Add(masterObject);
 
             CharacterMaster characterMaster = masterObject.GetComponent<CharacterMaster>();
             characterMaster.bodyPrefab = bodyPrefab;
@@ -573,7 +573,7 @@ namespace HenryAPI.Modules
             return masterObject;
         }
 
-        public static GameObject LoadMaster(this AssetBundle assetBundle, GameObject bodyPrefab, string assetName)
+        public static GameObject LoadMaster(this AssetBundle assetBundle, ContentPackContainer contentPack, GameObject bodyPrefab, string assetName)
         {
             GameObject newMaster = assetBundle.LoadAsset<GameObject>(assetName);
 
@@ -602,7 +602,7 @@ namespace HenryAPI.Modules
             characterMaster.bodyPrefab = bodyPrefab;
             characterMaster.teamIndex = TeamIndex.Monster;
 
-            Modules.Content.AddMasterPrefab(newMaster);
+            Modules.Content.AddMasterPrefab(contentPack,newMaster);
             return newMaster;
         }
         #endregion master
