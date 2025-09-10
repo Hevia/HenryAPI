@@ -8,8 +8,6 @@ using System.Security.Permissions;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
-
-//rename this namespace
 namespace HenryAPI
 {
     //[BepInDependency("com.rune580.riskofoptions", BepInDependency.DependencyFlags.SoftDependency)]
@@ -17,14 +15,9 @@ namespace HenryAPI
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
     public class HenryAPIPlugin : BaseUnityPlugin
     {
-        // if you do not change this, you are giving permission to deprecate the mod-
-        //  please change the names to your own stuff, thanks
-        //   this shouldn't even have to be said
         public const string MODUID = "com.buns.HenryAPI";
         public const string MODNAME = "HenryAPI";
         public const string MODVERSION = "1.0.0";
-
-        // a prefix for name tokens to prevent conflicts- please capitalize all name tokens for convention
         public const string DEVELOPER_PREFIX = "BUNS";
 
         public static HenryAPIPlugin instance;
