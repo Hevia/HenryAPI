@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using RoR2.Skills;
 
-namespace HenryMod.Modules.Characters
+namespace HenryAPI.Modules.Characters
 {
     public abstract class SurvivorBase<T> : CharacterBase<T> where T : SurvivorBase<T>, new()
     {

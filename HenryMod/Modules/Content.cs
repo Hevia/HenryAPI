@@ -3,35 +3,34 @@ using RoR2.Skills;
 using System;
 using UnityEngine;
 
-namespace HenryMod.Modules
+namespace HenryAPI.Modules
 {
     //consolidate contentaddition here in case something breaks and/or want to move to r2api
-    internal class Content
+    public static class Content
     {
-        internal static void AddCharacterBodyPrefab(GameObject bprefab)
+        public static void AddCharacterBodyPrefab(ContentPackContainer contentPack, GameObject bprefab)
         {
-            ContentPacks.bodyPrefabs.Add(bprefab);
+            contentPack.bodyPrefabs.Add(bprefab);
         }
 
-        internal static void AddMasterPrefab(GameObject prefab)
+        public static void AddMasterPrefab(ContentPackContainer contentPack, GameObject prefab)
         {
-            ContentPacks.masterPrefabs.Add(prefab);
+            contentPack.masterPrefabs.Add(prefab);
         }
 
-        internal static void AddProjectilePrefab(GameObject prefab)
+        public static void AddProjectilePrefab(ContentPackContainer contentPack, GameObject prefab)
         {
-            ContentPacks.projectilePrefabs.Add(prefab);
+            contentPack.projectilePrefabs.Add(prefab);
         }
 
-        internal static void AddSurvivorDef(SurvivorDef survivorDef)
+        public static void AddSurvivorDef(ContentPackContainer contentPack, SurvivorDef survivorDef)
         {
-
-            ContentPacks.survivorDefs.Add(survivorDef);
+            contentPack.survivorDefs.Add(survivorDef);
         }
-        internal static void CreateSurvivor(GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix) { CreateSurvivor(bodyPrefab, displayPrefab, charColor, tokenPrefix, null, 100f); }
-        internal static void CreateSurvivor(GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, float sortPosition) { CreateSurvivor(bodyPrefab, displayPrefab, charColor, tokenPrefix, null, sortPosition); }
-        internal static void CreateSurvivor(GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, UnlockableDef unlockableDef) { CreateSurvivor(bodyPrefab, displayPrefab, charColor, tokenPrefix, unlockableDef, 100f); }
-        internal static void CreateSurvivor(GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, UnlockableDef unlockableDef, float sortPosition)
+        public static void CreateSurvivor(ContentPackContainer contentPack, GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix) { CreateSurvivor(contentPack, bodyPrefab, displayPrefab, charColor, tokenPrefix, null, 100f); }
+        public static void CreateSurvivor(ContentPackContainer contentPack, GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, float sortPosition) { CreateSurvivor(contentPack, bodyPrefab, displayPrefab, charColor, tokenPrefix, null, sortPosition); }
+        public static void CreateSurvivor(ContentPackContainer contentPack, GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, UnlockableDef unlockableDef) { CreateSurvivor(contentPack, bodyPrefab, displayPrefab, charColor, tokenPrefix, unlockableDef, 100f); }
+        public static void CreateSurvivor(ContentPackContainer contentPack, GameObject bodyPrefab, GameObject displayPrefab, Color charColor, string tokenPrefix, UnlockableDef unlockableDef, float sortPosition)
         {
             SurvivorDef survivorDef = ScriptableObject.CreateInstance<SurvivorDef>();
             survivorDef.bodyPrefab = bodyPrefab;
@@ -47,45 +46,45 @@ namespace HenryMod.Modules
             survivorDef.desiredSortPosition = sortPosition;
             survivorDef.unlockableDef = unlockableDef;
 
-            Modules.Content.AddSurvivorDef(survivorDef);
+            Modules.Content.AddSurvivorDef(contentPack, survivorDef);
         }
 
-        internal static void AddUnlockableDef(UnlockableDef unlockableDef)
+        public static void AddUnlockableDef(ContentPackContainer contentPack, UnlockableDef unlockableDef)
         {
-            ContentPacks.unlockableDefs.Add(unlockableDef);
+            contentPack.unlockableDefs.Add(unlockableDef);
         }
-        internal static UnlockableDef CreateAndAddUnlockbleDef(string identifier, string nameToken, Sprite achievementIcon)
+        public static UnlockableDef CreateAndAddUnlockbleDef(ContentPackContainer contentPack, string identifier, string nameToken, Sprite achievementIcon)
         {
             UnlockableDef unlockableDef = ScriptableObject.CreateInstance<UnlockableDef>();
             unlockableDef.cachedName = identifier;
             unlockableDef.nameToken = nameToken;
             unlockableDef.achievementIcon = achievementIcon;
 
-            AddUnlockableDef(unlockableDef);
+            AddUnlockableDef(contentPack, unlockableDef);
 
             return unlockableDef;
         }
 
-        internal static void AddSkillDef(SkillDef skillDef)
+        public static void AddSkillDef(ContentPackContainer contentPack, SkillDef skillDef)
         {
-            ContentPacks.skillDefs.Add(skillDef);
+            contentPack.skillDefs.Add(skillDef);
         }
 
-        internal static void AddSkillFamily(SkillFamily skillFamily)
+        public static void AddSkillFamily(ContentPackContainer contentPack, SkillFamily skillFamily)
         {
-            ContentPacks.skillFamilies.Add(skillFamily);
+            contentPack.skillFamilies.Add(skillFamily);
         }
 
-        internal static void AddEntityState(Type entityState)
+        public static void AddEntityState(ContentPackContainer contentPack, Type entityState)
         {
-            ContentPacks.entityStates.Add(entityState);
+            contentPack.entityStates.Add(entityState);
         }
 
-        internal static void AddBuffDef(BuffDef buffDef)
+        public static void AddBuffDef(ContentPackContainer contentPack, BuffDef buffDef)
         {
-            ContentPacks.buffDefs.Add(buffDef);
+            contentPack.buffDefs.Add(buffDef);
         }
-        internal static BuffDef CreateAndAddBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff)
+        public static BuffDef CreateAndAddBuff(ContentPackContainer contentPack, string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff)
         {
             BuffDef buffDef = ScriptableObject.CreateInstance<BuffDef>();
             buffDef.name = buffName;
@@ -95,35 +94,35 @@ namespace HenryMod.Modules
             buffDef.eliteDef = null;
             buffDef.iconSprite = buffIcon;
 
-            AddBuffDef(buffDef);
+            AddBuffDef(contentPack, buffDef);
 
             return buffDef;
         }
 
-        internal static void AddEffectDef(EffectDef effectDef)
+        public static void AddEffectDef(ContentPackContainer contentPack, EffectDef effectDef)
         {
-            ContentPacks.effectDefs.Add(effectDef);
+            contentPack.effectDefs.Add(effectDef);
         }
-        internal static EffectDef CreateAndAddEffectDef(GameObject effectPrefab)
+        public static EffectDef CreateAndAddEffectDef(ContentPackContainer contentPack, GameObject effectPrefab)
         {
             EffectDef effectDef = new EffectDef(effectPrefab);
 
-            AddEffectDef(effectDef);
+            AddEffectDef(contentPack, effectDef);
 
             return effectDef;
         }
 
-        internal static void AddNetworkSoundEventDef(NetworkSoundEventDef networkSoundEventDef)
+        public static void AddNetworkSoundEventDef(ContentPackContainer contentPack, NetworkSoundEventDef networkSoundEventDef)
         {
-            ContentPacks.networkSoundEventDefs.Add(networkSoundEventDef);
+            contentPack.networkSoundEventDefs.Add(networkSoundEventDef);
         }
-        internal static NetworkSoundEventDef CreateAndAddNetworkSoundEventDef(string eventName)
+        public static NetworkSoundEventDef CreateAndAddNetworkSoundEventDef(ContentPackContainer contentPack, string eventName)
         {
             NetworkSoundEventDef networkSoundEventDef = ScriptableObject.CreateInstance<NetworkSoundEventDef>();
             networkSoundEventDef.akId = AkSoundEngine.GetIDFromString(eventName);
             networkSoundEventDef.eventName = eventName;
 
-            AddNetworkSoundEventDef(networkSoundEventDef);
+            AddNetworkSoundEventDef(contentPack, networkSoundEventDef);
             
             return networkSoundEventDef;
         }

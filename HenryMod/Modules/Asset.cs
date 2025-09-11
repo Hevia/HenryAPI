@@ -10,7 +10,7 @@ using RoR2.Projectile;
 using Path = System.IO.Path;
 using System;
 
-namespace HenryMod.Modules
+namespace HenryAPI.Modules
 {
     internal static class Asset
     {
@@ -34,7 +34,7 @@ namespace HenryMod.Modules
             AssetBundle assetBundle = null;
             try
             {
-                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(HenryPlugin.instance.Info.Location), "AssetBundles", bundleName));
+                assetBundle = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(HenryAPIPlugin.instance.Info.Location), "AssetBundles", bundleName));
             }
             catch (System.Exception e)
             {
@@ -47,7 +47,7 @@ namespace HenryMod.Modules
 
         }
 
-        internal static GameObject CloneTracer(string originalTracerName, string newTracerName)
+        internal static GameObject CloneTracer(ContentPackContainer contentPack, string originalTracerName, string newTracerName)
         {
             if (RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/" + originalTracerName) == null) 
                 return null;
@@ -61,7 +61,7 @@ namespace HenryMod.Modules
             newTracer.GetComponent<Tracer>().speed = 250f;
             newTracer.GetComponent<Tracer>().length = 50f;
 
-            Modules.Content.CreateAndAddEffectDef(newTracer);
+            Modules.Content.CreateAndAddEffectDef(contentPack, newTracer);
 
             return newTracer;
         }
@@ -93,22 +93,8 @@ namespace HenryMod.Modules
             }
         }
 
-        [Obsolete("just load from addressables")]
-        internal static GameObject LoadCrosshair(string crosshairName)
-        {
-            GameObject loadedCrosshair = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Crosshair/" + crosshairName + "Crosshair");
-            if (loadedCrosshair == null)
-            {
-                Log.Error($"could not load crosshair with the name {crosshairName}. defaulting to Standard");
-
-                return RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-            }
-
-            return loadedCrosshair;
-        }
-
-        internal static GameObject LoadEffect(this AssetBundle assetBundle, string resourceName, bool parentToTransform) => LoadEffect(assetBundle, resourceName, "", parentToTransform);
-        internal static GameObject LoadEffect(this AssetBundle assetBundle, string resourceName, string soundName = "", bool parentToTransform = false)
+        internal static GameObject LoadEffect(this AssetBundle assetBundle, ContentPackContainer contentPack, string resourceName, bool parentToTransform) => LoadEffect(assetBundle, contentPack, resourceName, "", parentToTransform);
+        internal static GameObject LoadEffect(this AssetBundle assetBundle, ContentPackContainer contentPack, string resourceName, string soundName = "", bool parentToTransform = false)
         {
             GameObject newEffect = assetBundle.LoadAsset<GameObject>(resourceName);
 
@@ -128,7 +114,7 @@ namespace HenryMod.Modules
             effect.positionAtReferencedTransform = true;
             effect.soundName = soundName;
 
-            Modules.Content.CreateAndAddEffectDef(newEffect);
+            Modules.Content.CreateAndAddEffectDef(contentPack, newEffect);
 
             return newEffect;
         }
@@ -154,7 +140,7 @@ namespace HenryMod.Modules
             return newPrefab;
         }
 
-        internal static GameObject LoadAndAddProjectilePrefab(this AssetBundle assetBundle, string newPrefabName)
+        internal static GameObject LoadAndAddProjectilePrefab(this AssetBundle assetBundle, ContentPackContainer contentPack, string newPrefabName)
         {
             GameObject newPrefab = assetBundle.LoadAsset<GameObject>(newPrefabName);
             if(newPrefab == null)
@@ -163,7 +149,7 @@ namespace HenryMod.Modules
                 return null;
             }
 
-            Content.AddProjectilePrefab(newPrefab);
+            Content.AddProjectilePrefab(contentPack, newPrefab);
             return newPrefab;
         }
     }
